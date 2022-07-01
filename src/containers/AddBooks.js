@@ -4,11 +4,11 @@ const AddBooks = () => {
     return (
         // role='main' => contenu principal du document pour info
         <main role='main'>
-            <div className='jumbotron jumbotron-fluid'>
+            <div className='mt-4 p-5 bg-secondary text-white rounded'>
                 <div className='container text-center'>
                     <h1 className='display-4'>BOOKS</h1>
                     <p>Ajoutez un livre à votre bibliothèque</p>
-                    <form className='form-inline justify-content-center'>
+                    <form className='justify-content-center'>
                         <div className='form-group'>
                             <input
                                 type='text'
@@ -17,6 +17,7 @@ const AddBooks = () => {
                                 required
                             />
                         </div>
+                        <br />
                         <div className='form-group'>
                             <input
                                 type='text'
@@ -25,20 +26,21 @@ const AddBooks = () => {
                                 required
                             />
                         </div>
+                        <br />
                         <div className='form-group'>
-                            <button className='btn btn-outline-secondary ml-3'>
+                            <button className='btn btn-outline-info ml-3'>
                                 Ajouter un livre
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div style={{ minHeight: '200px' }}></div>
+            <div style={{ minHeight: '200px'}}></div>
 
             <div className='row'>
                 <div className='col-md-12'>
                     <ul className='list-group'>
-                        <li className='list-group-item list-group-light d-flex justify-content-between'>
+                        <li className='list-group-item list-group-light mw-50 d-flex justify-content-center'>
                             Livres enregistrés ici
                         </li>
                     </ul>
