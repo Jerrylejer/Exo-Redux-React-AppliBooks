@@ -1,4 +1,4 @@
-import { ADD_BOOKS } from '../constants';
+import { ADD_BOOKS } from '../types';
 import { v4 as uuiv4 } from 'uuid';
 
 // Déclaration du initialState
