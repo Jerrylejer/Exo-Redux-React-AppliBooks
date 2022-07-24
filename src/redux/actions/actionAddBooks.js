@@ -1,4 +1,4 @@
-import { ADD_BOOKS, DELETE_BOOK } from '../types';
+import { ADD_BOOKS, DELETE_ALL_BOOKS, DELETE_BOOK } from '../types';
 
 export const addBooks = formData => {
     return {
@@ -12,6 +12,14 @@ export const deleteBook = id => {
     return {
         type: DELETE_BOOK,
         // ID => nous avons simplement besoin de l'ID du livre déjà enregistré
+        payload: id
+    }
+
+}
+
+export const deleteAllBooks = id => {
+    return {
+        type: DELETE_ALL_BOOKS,
         payload: id
     }
 }

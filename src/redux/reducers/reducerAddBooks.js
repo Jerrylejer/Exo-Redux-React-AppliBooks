@@ -1,4 +1,4 @@
-import { ADD_BOOKS, DELETE_BOOK } from '../types';
+import { ADD_BOOKS, DELETE_BOOK, DELETE_ALL_BOOKS } from '../types';
 import { v4 as uuiv4 } from 'uuid';
 
 // Déclaration du initialState
@@ -17,8 +17,14 @@ const fetchFormData = (action) => {
 
 // Delete d'une data à l'aide de son ID (fonction helper)
 const deleteDataById = (state, id) => {
-    const purgedList = state.filter(book => book.id !== id);
+    const purgedList = state.filter((book) => book.id !== id);
     return purgedList;
+};
+
+// Delete de la liste (fonction helper)
+const deleteAllData = (initialState) => {
+    const emptyList = initialState.books;
+    return emptyList;
 };
 
 // Déclaration du reducer
@@ -39,6 +45,13 @@ export const reducerAddBooks = (state = initialState.books, action) => {
         case DELETE_BOOK:
             // 1- récupération du state modifié par le deleteById()
             state = deleteDataById(state, action.payload);
+            // 2- enregistrement d'une copie au niveau du localStorage pour la maintenance des données
+            localStorage.setItem('booksData', JSON.stringify(state));
+            return state;
+
+        case DELETE_ALL_BOOKS:
+            // 1- récupération du state modifié par le deleteById()
+            state = deleteAllData(initialState);
             // 2- enregistrement d'une copie au niveau du localStorage pour la maintenance des données
             localStorage.setItem('booksData', JSON.stringify(state));
             return state;
