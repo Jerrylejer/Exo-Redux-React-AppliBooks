@@ -1,10 +1,17 @@
-import { ADD_BOOKS } from '../types';
+import { ADD_BOOKS, DELETE_BOOK } from '../types';
 
 export const addBooks = formData => {
     return {
         type: ADD_BOOKS,
-        // data => objet reçu du submit formulaire (title/author)
+        // formdata => objet reçu du submit formulaire (title/author)
         payload: formData
     }
 }
 
+export const deleteBook = id => {
+    return {
+        type: DELETE_BOOK,
+        // ID => nous avons simplement besoin de l'ID du livre déjà enregistré
+        payload: id
+    }
+}

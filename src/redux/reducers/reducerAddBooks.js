@@ -1,4 +1,4 @@
-import { ADD_BOOKS } from '../types';
+import { ADD_BOOKS, DELETE_BOOK } from '../types';
 import { v4 as uuiv4 } from 'uuid';
 
 // Déclaration du initialState
@@ -6,13 +6,19 @@ const initialState = {
     books: [],
 };
 
-// Récupération des données de l'action actionAddBooks.js
+// Récupération des datas (fonction helper) => récup du formulaire
 const fetchFormData = (action) => {
     return {
         id: uuiv4(), // génération d'ID automatique
         title: action.payload.title,
         author: action.payload.author,
     };
+};
+
+// Delete d'une data à l'aide de son ID (fonction helper)
+const deleteDataById = (state, id) => {
+    const purgedList = state.filter(book => book.id !== id);
+    return purgedList;
 };
 
 // Déclaration du reducer
@@ -30,6 +36,14 @@ export const reducerAddBooks = (state = initialState.books, action) => {
             localStorage.setItem('booksData', JSON.stringify(state));
             return state;
 
-        default: return state;
+        case DELETE_BOOK:
+            // 1- récupération du state modifié par le deleteById()
+            state = deleteDataById(state, action.payload);
+            // 2- enregistrement d'une copie au niveau du localStorage pour la maintenance des données
+            localStorage.setItem('booksData', JSON.stringify(state));
+            return state;
+
+        default:
+            return state;
     }
 };
