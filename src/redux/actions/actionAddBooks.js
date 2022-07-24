@@ -17,9 +17,8 @@ export const deleteBook = id => {
 
 }
 
-export const deleteAllBooks = id => {
+export const deleteAllBooks = () => {
     return {
         type: DELETE_ALL_BOOKS,
-        payload: id
     }
 }
