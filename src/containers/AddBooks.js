@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { addBooks } from '../redux/actions/actionAddBooks';
 // Connexion au store
 import { connect } from 'react-redux';
+// Animation de la liste de livres
+import FlipMove from 'react-flip-move';
 
 const AddBooks = ({ libraryData, addBook }) => {
     console.log(libraryData);
@@ -25,24 +27,26 @@ const AddBooks = ({ libraryData, addBook }) => {
     // Pour l'affichage des livres
     const displayLibrary =
         libraryData.length > 0 ? (
-            libraryData.map((book) => {
-                return (
-                    <li
-                        key={book.id}
-                        className='list-group-item list-group-item-light mw-50 d-flex justify-content-center'
-                    >
-                        <span>
-                            <strong>Titre:</strong>
-                            {book.title}
-                        </span>
-                        <span>
-                            <strong>Auteur:</strong>
-                            {book.author}
-                        </span>
-                        <span className='btn btn-danger'>x</span>
-                    </li>
-                );
-            })
+            <FlipMove>
+                {libraryData.map((book) => {
+                    return (
+                        <li
+                            key={book.id}
+                            className='list-group-item list-group-item-light mw-50 d-flex justify-content-center'
+                        >
+                            <span className='px-5'>
+                                <strong className='px-3'>Titre:</strong>
+                                {book.title}
+                            </span>
+                            <span className='px-5'>
+                                <strong className='px-3'>Auteur:</strong>
+                                {book.author}
+                            </span>
+                            <span className='btn btn-danger'>x</span>
+                        </li>
+                    );
+                })}
+            </FlipMove>
         ) : (
             <p className='text-center'>Aucun livre dans la bibliothèque</p>
         );
@@ -104,12 +108,10 @@ const AddBooks = ({ libraryData, addBook }) => {
                 <div className='col-md-12'>
                     <ul className='list-group'>{displayLibrary}</ul>
                     <div className='d-flex justify-content-center'>
-
                         {libraryData.length > 0 && (
                             <button className='btn btn-danger mt-4 mb-5'>
                                 Effacer les livres
                             </button>
-
                         )}
                     </div>
                 </div>
