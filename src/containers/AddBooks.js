@@ -111,7 +111,7 @@ const AddBooks = ({ libraryData, addBook, deleteBook, deleteAllBooks }) => {
                     <ul className='list-group'>{displayLibrary}</ul>
                     <div className='d-flex justify-content-center'>
                         {libraryData.length > 0 && (
-                            <button className='btn btn-danger mt-4 mb-5' onClick={() => deleteAllBooks(initialState)}>
+                            <button className='btn btn-danger mt-4 mb-5' onClick={() => deleteAllBooks()}>
                                 Effacer les livres
                             </button>
                         )}
@@ -132,7 +132,7 @@ const addDispatchToProps = (dispatch) => {
     return {
         addBook: (param) => dispatch(addBooks(param)),
         deleteBook: (id) => dispatch(deleteBook(id)),
-        deleteAllBooks: (initialState) => dispatch(deleteAllBooks(initialState))
+        deleteAllBooks: () => dispatch(deleteAllBooks())
     };
 };
 
