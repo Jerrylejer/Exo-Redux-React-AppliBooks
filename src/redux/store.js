@@ -1,10 +1,19 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {
+    configureStore,
+    combineReducers,
+    applyMiddleware,
+} from '@reduxjs/toolkit';
 import { reducerAddBooks } from './reducers/reducerAddBooks';
+import { reducerFetchBooks } from './reducers/reducerFetchBooks';
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
-    library: reducerAddBooks
-})
+    library: reducerAddBooks,
+    googleApi: reducerFetchBooks,
+});
 
-const store = configureStore({ reducer: rootReducer });
+applyMiddleware(thunk);
+
+const store = configureStore({ reducer: rootReducer }, applyMiddleware(thunk));
 
 export default store;
