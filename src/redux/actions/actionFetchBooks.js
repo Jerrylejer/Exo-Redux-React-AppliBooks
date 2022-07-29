@@ -35,9 +35,13 @@ const API_KEY = 'AIzaSyCgXI0lGWcXmlRWTNc_UUg53EBd39yVWfU';
         axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${API_KEY}&maxResults=20`)
         .then(response => {
             console.log(response)
+            const booksSearchArray = response.data.items;
+            dispatch(fetchBooksSuccess(booksSearchArray))
         })
         .catch(error => {
-            console.log(error)
+            console.log(error);
+            const errorFeedback = error.message;
+            dispatch(fetchBooksError(errorFeedback));
         })
     }
   }
