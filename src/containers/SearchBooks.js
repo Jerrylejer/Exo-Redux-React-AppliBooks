@@ -23,6 +23,47 @@ const SearchBooks = () => {
     dispatch(fetchBooks(search));
   }
 
+  const displayActions = state.isLoading ? (
+    <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    )
+  : state.error !== '' ? (
+    <h2>{state.error}</h2>
+  )
+  : (
+    state.fetchedBooks.map(data => {
+    return (<div key={data.id} className='card m-5'>
+        <div className='card-header'>
+            <h5 className="mb-0">
+                <button 
+                className="btn btn-link collapsed"
+                data-toggle="collapse"
+                data-target={`#${data.id}`}
+                aria-expanded="false">
+                    {data.volumeInfo.title}
+                </button>
+            </h5>
+        </div>
+            <div className='collapse' data-parent='accordion'>
+                <div id={data.id} className='card-body'>
+                    {data.volumeInfo.imageLinks && <img src={data.volumeInfo.imageLinks.thumbnail} alt={data.volumeInfo.title} />}
+                    <br />
+                    <h4 className="card-title">Titre: {data.volumeInfo.title}</h4>
+                    <h5 className="card-title">Auteur: {data.volumeInfo.authors}</h5>
+                    <p className="card-text">Description: {data.volumeInfo.description}</p>
+                        <a href={data.volumeInfo.previewLink} className="btn btn-outline-secondary" target="_blank" rel="noopener noreferrer no">Plus d'infos</a>
+                        <button className="btn btn-outline-secondary">Enregistrer</button>
+
+                </div>
+            </div>
+    </div>)
+    })
+  )
+  
+
     return (
         <main role='main'>
             <div className='mt-4 p-5 bg-secondary text-white rounded'>
@@ -54,12 +95,7 @@ const SearchBooks = () => {
             </div>
             <div className='container' style={{ minHeight: '200px' }}>
                 <div className='accordion'>
-                    <div className='card m-5'>
-                        <div className='card-header'></div>
-                        <div className='collapse' data-parent='accordion'>
-                            <div className='card-body'></div>
-                        </div>
-                    </div>
+                { displayActions }
                 </div>
             </div>
         </main>
