@@ -2,8 +2,22 @@ import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchBooks } from '../redux/actions/actionFetchBooks';
+import { addBooks } from '../redux/actions/actionAddBooks';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SearchBooks = () => {
+    // Notification toastify
+    const notify = () => toast.success('Le livre a été ajouté à votre collection', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+
     // State modifié par l'input de recherche
     const [search, setSearch] = useState('');
 
@@ -21,9 +35,18 @@ const SearchBooks = () => {
         dispatch(fetchBooks(search));
     };
 
+    const handleSave = (title, author) => {
+        const bookToSave = {
+            title,
+            author,
+        };
+        dispatch(addBooks(bookToSave));
+        notify();
+    };
+
     //! Traduction des infos visualisées en console, cette fois dans le JSX
     const displayActions = state.isLoading ? (
-        <div className='d-flex justify-content-center'>
+        <div className='d-flex justify-content-center m-5'>
             <div className='spinner-border' role='status'>
                 <span className='visually-hidden'>Loading...</span>
             </div>
@@ -79,9 +102,28 @@ const SearchBooks = () => {
                             >
                                 Plus d'infos
                             </a>
-                            <button className='btn btn-outline-secondary'>
+                            <button
+                                className='btn btn-outline-secondary ms-3'
+                                onClick={() =>
+                                    handleSave(
+                                        data.volumeInfo.title,
+                                        data.volumeInfo.authors
+                                    )
+                                }
+                            >
                                 Enregistrer
                             </button>
+                            <ToastContainer
+                                position='top-right'
+                                autoClose={2000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                            />
                         </div>
                     </div>
                 </div>
